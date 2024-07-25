@@ -7,28 +7,28 @@ import "@katana/v3-contracts/core/libraries/LowGasSafeMath.sol";
 import "./PeripheryPayments.sol";
 import "../interfaces/IPeripheryPaymentsWithFee.sol";
 
-import "../interfaces/external/IWETH9.sol";
+import "../interfaces/external/IWRON.sol";
 import "../libraries/TransferHelper.sol";
 
 abstract contract PeripheryPaymentsWithFee is PeripheryPayments, IPeripheryPaymentsWithFee {
   using LowGasSafeMath for uint256;
 
   /// @inheritdoc IPeripheryPaymentsWithFee
-  function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)
+  function unwrapWRONWithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)
     public
     payable
     override
   {
     require(feeBips > 0 && feeBips <= 100);
 
-    uint256 balanceWETH9 = IWETH9(WETH9).balanceOf(address(this));
-    require(balanceWETH9 >= amountMinimum, "Insufficient WETH9");
+    uint256 balanceWRON = IWRON(WRON).balanceOf(address(this));
+    require(balanceWRON >= amountMinimum, "Insufficient WRON");
 
-    if (balanceWETH9 > 0) {
-      IWETH9(WETH9).withdraw(balanceWETH9);
-      uint256 feeAmount = balanceWETH9.mul(feeBips) / 10_000;
-      if (feeAmount > 0) TransferHelper.safeTransferETH(feeRecipient, feeAmount);
-      TransferHelper.safeTransferETH(recipient, balanceWETH9 - feeAmount);
+    if (balanceWRON > 0) {
+      IWRON(WRON).withdraw(balanceWRON);
+      uint256 feeAmount = balanceWRON.mul(feeBips) / 10_000;
+      if (feeAmount > 0) TransferHelper.safeTransferRON(feeRecipient, feeAmount);
+      TransferHelper.safeTransferRON(recipient, balanceWRON - feeAmount);
     }
   }
 

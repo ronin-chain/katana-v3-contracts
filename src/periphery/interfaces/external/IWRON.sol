@@ -3,11 +3,11 @@ pragma solidity =0.7.6;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-/// @title Interface for WETH9
-interface IWETH9 is IERC20 {
-  /// @notice Deposit ether to get wrapped ether
+/// @title Interface for WRON
+interface IWRON is IERC20 {
+  /// @notice Deposit RON to get wrapped RON
   function deposit() external payable;
 
-  /// @notice Withdraw wrapped ether to get ether
+  /// @notice Withdraw wrapped RON to get RON
   function withdraw(uint256) external;
 }

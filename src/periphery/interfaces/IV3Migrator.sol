@@ -22,7 +22,7 @@ interface IV3Migrator is IMulticall, ISelfPermit, IPoolInitializer {
     uint256 amount1Min; // must be discounted by percentageToMigrate
     address recipient;
     uint256 deadline;
-    bool refundAsETH;
+    bool refundAsRON;
   }
 
   /// @notice Migrates liquidity to v3 by burning v2 liquidity and minting a new position for v3

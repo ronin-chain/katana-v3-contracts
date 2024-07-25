@@ -81,9 +81,9 @@ contract NonfungiblePositionManager is
   /// @dev The address of the token descriptor contract, which handles generating token URIs for position tokens
   address private immutable _tokenDescriptor;
 
-  constructor(address _factory, address _WETH9, address _tokenDescriptor_)
+  constructor(address _factory, address _WRON, address _tokenDescriptor_)
     ERC721Permit("Katana V3 Positions NFT-V1", "KATANA-V3-POS", "1")
-    PeripheryImmutableState(_factory, _WETH9)
+    PeripheryImmutableState(_factory, _WRON)
   {
     _tokenDescriptor = _tokenDescriptor_;
   }

@@ -2,18 +2,18 @@
 pragma solidity >=0.7.5;
 
 /// @title Periphery Payments
-/// @notice Functions to ease deposits and withdrawals of ETH
+/// @notice Functions to ease deposits and withdrawals of RON
 interface IPeripheryPayments {
-  /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH.
-  /// @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.
-  /// @param amountMinimum The minimum amount of WETH9 to unwrap
-  /// @param recipient The address receiving ETH
-  function unwrapWETH9(uint256 amountMinimum, address recipient) external payable;
+  /// @notice Unwraps the contract's WRON balance and sends it to recipient as RON.
+  /// @dev The amountMinimum parameter prevents malicious contracts from stealing WRON from users.
+  /// @param amountMinimum The minimum amount of WRON to unwrap
+  /// @param recipient The address receiving RON
+  function unwrapWRON(uint256 amountMinimum, address recipient) external payable;
 
-  /// @notice Refunds any ETH balance held by this contract to the `msg.sender`
-  /// @dev Useful for bundling with mint or increase liquidity that uses ether, or exact output swaps
-  /// that use ether for the input amount
-  function refundETH() external payable;
+  /// @notice Refunds any RON balance held by this contract to the `msg.sender`
+  /// @dev Useful for bundling with mint or increase liquidity that uses RON, or exact output swaps
+  /// that use RON for the input amount
+  function refundRON() external payable;
 
   /// @notice Transfers the full amount of a token held by this contract to recipient
   /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users

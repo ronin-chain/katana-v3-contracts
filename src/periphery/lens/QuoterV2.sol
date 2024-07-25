@@ -27,7 +27,7 @@ contract QuoterV2 is IQuoterV2, IKatanaV3SwapCallback, PeripheryImmutableState {
   /// @dev Transient storage variable used to check a safety condition in exact output swaps.
   uint256 private amountOutCached;
 
-  constructor(address _factory, address _WETH9) PeripheryImmutableState(_factory, _WETH9) { }
+  constructor(address _factory, address _WRON) PeripheryImmutableState(_factory, _WRON) { }
 
   function getPool(address tokenA, address tokenB, uint24 fee) private view returns (IKatanaV3Pool) {
     return IKatanaV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));

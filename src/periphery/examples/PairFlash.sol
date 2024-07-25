@@ -20,7 +20,7 @@ contract PairFlash is IKatanaV3FlashCallback, PeripheryPayments {
 
   ISwapRouter public immutable swapRouter;
 
-  constructor(ISwapRouter _swapRouter, address _factory, address _WETH9) PeripheryImmutableState(_factory, _WETH9) {
+  constructor(ISwapRouter _swapRouter, address _factory, address _WRON) PeripheryImmutableState(_factory, _WRON) {
     swapRouter = _swapRouter;
   }
 

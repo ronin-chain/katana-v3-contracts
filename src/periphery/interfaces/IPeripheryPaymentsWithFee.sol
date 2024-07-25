@@ -4,12 +4,12 @@ pragma solidity >=0.7.5;
 import "./IPeripheryPayments.sol";
 
 /// @title Periphery Payments
-/// @notice Functions to ease deposits and withdrawals of ETH
+/// @notice Functions to ease deposits and withdrawals of RON
 interface IPeripheryPaymentsWithFee is IPeripheryPayments {
-  /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH, with a percentage between
+  /// @notice Unwraps the contract's WRON balance and sends it to recipient as RON, with a percentage between
   /// 0 (exclusive), and 1 (inclusive) going to feeRecipient
-  /// @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.
-  function unwrapWETH9WithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)
+  /// @dev The amountMinimum parameter prevents malicious contracts from stealing WRON from users.
+  function unwrapWRONWithFee(uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient)
     external
     payable;
 

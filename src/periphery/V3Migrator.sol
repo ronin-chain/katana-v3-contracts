@@ -13,7 +13,7 @@ import "./interfaces/IV3Migrator.sol";
 import "./base/PeripheryImmutableState.sol";
 import "./base/Multicall.sol";
 import "./base/SelfPermit.sol";
-import "./interfaces/external/IWETH9.sol";
+import "./interfaces/external/IWRON.sol";
 import "./base/PoolInitializer.sol";
 
 /// @title Katana V3 Migrator
@@ -22,14 +22,14 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, PoolInitializer, Mu
 
   address public immutable nonfungiblePositionManager;
 
-  constructor(address _factory, address _WETH9, address _nonfungiblePositionManager)
-    PeripheryImmutableState(_factory, _WETH9)
+  constructor(address _factory, address _WRON, address _nonfungiblePositionManager)
+    PeripheryImmutableState(_factory, _WRON)
   {
     nonfungiblePositionManager = _nonfungiblePositionManager;
   }
 
   receive() external payable {
-    require(msg.sender == WETH9, "Not WETH9");
+    require(msg.sender == WRON, "Not WRON");
   }
 
   function migrate(MigrateParams calldata params) external override {
@@ -72,9 +72,9 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, PoolInitializer, Mu
       }
 
       uint256 refund0 = amount0V2 - amount0V3;
-      if (params.refundAsETH && params.token0 == WETH9) {
-        IWETH9(WETH9).withdraw(refund0);
-        TransferHelper.safeTransferETH(msg.sender, refund0);
+      if (params.refundAsRON && params.token0 == WRON) {
+        IWRON(WRON).withdraw(refund0);
+        TransferHelper.safeTransferRON(msg.sender, refund0);
       } else {
         TransferHelper.safeTransfer(params.token0, msg.sender, refund0);
       }
@@ -85,9 +85,9 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, PoolInitializer, Mu
       }
 
       uint256 refund1 = amount1V2 - amount1V3;
-      if (params.refundAsETH && params.token1 == WETH9) {
-        IWETH9(WETH9).withdraw(refund1);
-        TransferHelper.safeTransferETH(msg.sender, refund1);
+      if (params.refundAsRON && params.token1 == WRON) {
+        IWRON(WRON).withdraw(refund1);
+        TransferHelper.safeTransferRON(msg.sender, refund1);
       } else {
         TransferHelper.safeTransfer(params.token1, msg.sender, refund1);
       }

@@ -37,7 +37,7 @@ contract MixedRouteQuoterV1 is IMixedRouteQuoterV1, IKatanaV3SwapCallback, Perip
   /// @dev Transient storage variable used to check a safety condition in exact output swaps.
   uint256 private amountOutCached;
 
-  constructor(address _factory, address _factoryV2, address _WETH9) PeripheryImmutableState(_factory, _WETH9) {
+  constructor(address _factory, address _factoryV2, address _WRON) PeripheryImmutableState(_factory, _WRON) {
     factoryV2 = _factoryV2;
   }
 
