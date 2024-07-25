@@ -11,7 +11,6 @@ import "@katana/v3-contracts/core/interfaces/callback/IKatanaV3SwapCallback.sol"
 import "@katana/v3-contracts/periphery/libraries/Path.sol";
 import "@katana/v3-contracts/periphery/libraries/PoolAddress.sol";
 import "@katana/v3-contracts/periphery/libraries/CallbackValidation.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 
 import "../base/ImmutableState.sol";
 import "../interfaces/IMixedRouteQuoterV1.sol";

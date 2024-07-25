@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity >=0.5.0;
 
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@katana/v3-contracts/core/libraries/LowGasSafeMath.sol";
+import "../interfaces/IKatanaV2Pair.sol";
 
 library KatanaV2Library {
   using LowGasSafeMath for uint256;
@@ -38,7 +38,7 @@ library KatanaV2Library {
     returns (uint256 reserveA, uint256 reserveB)
   {
     (address token0,) = sortTokens(tokenA, tokenB);
-    (uint256 reserve0, uint256 reserve1,) = IUniswapV2Pair(pairFor(factory, tokenA, tokenB)).getReserves();
+    (uint256 reserve0, uint256 reserve1,) = IKatanaV2Pair(pairFor(factory, tokenA, tokenB)).getReserves();
     (reserveA, reserveB) = tokenA == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
   }
 

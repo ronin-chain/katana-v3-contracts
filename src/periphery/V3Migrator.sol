@@ -3,13 +3,13 @@ pragma solidity =0.7.6;
 pragma abicoder v2;
 
 import "@katana/v3-contracts/core/libraries/LowGasSafeMath.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 
 import "./interfaces/INonfungiblePositionManager.sol";
 
 import "./libraries/TransferHelper.sol";
 
 import "./interfaces/IV3Migrator.sol";
+import "./interfaces/IKatanaV2Pair.sol";
 import "./base/PeripheryImmutableState.sol";
 import "./base/Multicall.sol";
 import "./base/SelfPermit.sol";
@@ -37,8 +37,8 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, PoolInitializer, Mu
     require(params.percentageToMigrate <= 100, "Percentage too large");
 
     // burn v2 liquidity to this address
-    IUniswapV2Pair(params.pair).transferFrom(msg.sender, params.pair, params.liquidityToMigrate);
-    (uint256 amount0V2, uint256 amount1V2) = IUniswapV2Pair(params.pair).burn(address(this));
+    IKatanaV2Pair(params.pair).transferFrom(msg.sender, params.pair, params.liquidityToMigrate);
+    (uint256 amount0V2, uint256 amount1V2) = IKatanaV2Pair(params.pair).burn(address(this));
 
     // calculate the amounts to migrate to v3
     uint256 amount0V2ToMigrate = amount0V2.mul(params.percentageToMigrate) / 100;
