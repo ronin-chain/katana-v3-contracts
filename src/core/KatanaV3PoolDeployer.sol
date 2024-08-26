@@ -3,7 +3,7 @@ pragma solidity =0.7.6;
 
 import "./interfaces/IKatanaV3PoolDeployer.sol";
 
-import "./KatanaV3PoolProxy.sol";
+import "./KatanaV3Pool.sol";
 
 contract KatanaV3PoolDeployer is IKatanaV3PoolDeployer {
   struct Parameters {
@@ -29,7 +29,7 @@ contract KatanaV3PoolDeployer is IKatanaV3PoolDeployer {
     returns (address pool)
   {
     parameters = Parameters({ factory: factory, token0: token0, token1: token1, fee: fee, tickSpacing: tickSpacing });
-    pool = address(new KatanaV3PoolProxy{ salt: keccak256(abi.encode(token0, token1, fee)) }());
+    pool = address(new KatanaV3Pool{ salt: keccak256(abi.encode(token0, token1, fee)) }());
     delete parameters;
   }
 }

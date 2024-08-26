@@ -1,20 +1,16 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity =0.7.6;
 
-import "@openzeppelin/contracts/proxy/UpgradeableBeacon.sol";
-
 import "./interfaces/IKatanaV3Factory.sol";
 
 import "./KatanaV3PoolDeployer.sol";
+import "./NoDelegateCall.sol";
 
 import "./KatanaV3Pool.sol";
 
 /// @title Canonical Katana V3 factory
 /// @notice Deploys Katana V3 pools and manages ownership and control over pool protocol fees
-contract KatanaV3Factory is IKatanaV3Factory, KatanaV3PoolDeployer {
-  /// @inheritdoc IKatanaV3Factory
-  address public immutable override beacon;
-
+contract KatanaV3Factory is IKatanaV3Factory, KatanaV3PoolDeployer, NoDelegateCall {
   /// @inheritdoc IKatanaV3Factory
   address public override owner;
 
@@ -24,9 +20,6 @@ contract KatanaV3Factory is IKatanaV3Factory, KatanaV3PoolDeployer {
   mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;
 
   constructor() {
-    address poolImplementation = address(new KatanaV3Pool());
-    beacon = address(new UpgradeableBeacon(poolImplementation));
-
     owner = msg.sender;
     emit OwnerChanged(address(0), msg.sender);
 
@@ -38,13 +31,13 @@ contract KatanaV3Factory is IKatanaV3Factory, KatanaV3PoolDeployer {
     emit FeeAmountEnabled(10000, 200);
   }
 
-  function upgradeBeacon(address newImplementation) external {
-    require(msg.sender == owner);
-    UpgradeableBeacon(beacon).upgradeTo(newImplementation);
-  }
-
   /// @inheritdoc IKatanaV3Factory
-  function createPool(address tokenA, address tokenB, uint24 fee) external override returns (address pool) {
+  function createPool(address tokenA, address tokenB, uint24 fee)
+    external
+    override
+    noDelegateCall
+    returns (address pool)
+  {
     require(tokenA != tokenB);
     (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
     require(token0 != address(0));

@@ -3,6 +3,8 @@ pragma solidity =0.7.6;
 
 import "./interfaces/IKatanaV3Pool.sol";
 
+import "./NoDelegateCall.sol";
+
 import "./libraries/LowGasSafeMath.sol";
 import "./libraries/SafeCast.sol";
 import "./libraries/Tick.sol";
@@ -25,7 +27,7 @@ import "./interfaces/callback/IKatanaV3MintCallback.sol";
 import "./interfaces/callback/IKatanaV3SwapCallback.sol";
 import "./interfaces/callback/IKatanaV3FlashCallback.sol";
 
-contract KatanaV3Pool is IKatanaV3Pool {
+contract KatanaV3Pool is IKatanaV3Pool, NoDelegateCall {
   using LowGasSafeMath for uint256;
   using LowGasSafeMath for int256;
   using SafeCast for uint256;
@@ -35,6 +37,21 @@ contract KatanaV3Pool is IKatanaV3Pool {
   using Position for mapping(bytes32 => Position.Info);
   using Position for Position.Info;
   using Oracle for Oracle.Observation[65535];
+
+  /// @inheritdoc IKatanaV3PoolImmutables
+  address public immutable override factory;
+  /// @inheritdoc IKatanaV3PoolImmutables
+  address public immutable override token0;
+  /// @inheritdoc IKatanaV3PoolImmutables
+  address public immutable override token1;
+  /// @inheritdoc IKatanaV3PoolImmutables
+  uint24 public immutable override fee;
+
+  /// @inheritdoc IKatanaV3PoolImmutables
+  int24 public immutable override tickSpacing;
+
+  /// @inheritdoc IKatanaV3PoolImmutables
+  uint128 public immutable override maxLiquidityPerTick;
 
   struct Slot0 {
     // the current price
@@ -83,25 +100,6 @@ contract KatanaV3Pool is IKatanaV3Pool {
   /// @inheritdoc IKatanaV3PoolState
   Oracle.Observation[65535] public override observations;
 
-  // These immutable constants are set when deploy the beacon proxy of the pool and cannot be changed unless upgrading.
-  /// @inheritdoc IKatanaV3PoolImmutables
-  address public override factory;
-  /// @inheritdoc IKatanaV3PoolImmutables
-  address public override token0;
-  /// @inheritdoc IKatanaV3PoolImmutables
-  address public override token1;
-  /// @inheritdoc IKatanaV3PoolImmutables
-  uint24 public override fee;
-
-  /// @inheritdoc IKatanaV3PoolImmutables
-  int24 public override tickSpacing;
-
-  /// @inheritdoc IKatanaV3PoolImmutables
-  uint128 public override maxLiquidityPerTick;
-
-  /// @dev The contract is initialized with the immutable parameters
-  bool private _immutablesInitialized;
-
   /// @dev Mutually exclusive reentrancy protection into the pool to/from a method. This method also prevents entrance
   /// to a function before the pool is initialized. The reentrancy guard is required throughout the contract because
   /// we use balance checks to determine the payment status of interactions such as mint, swap and flash.
@@ -119,20 +117,11 @@ contract KatanaV3Pool is IKatanaV3Pool {
   }
 
   constructor() {
-    // disable immutables initialization
-    _immutablesInitialized = true;
-  }
+    int24 _tickSpacing;
+    (factory, token0, token1, fee, _tickSpacing) = IKatanaV3PoolDeployer(msg.sender).parameters();
+    tickSpacing = _tickSpacing;
 
-  function initializeImmutables(address factory_, address token0_, address token1_, uint24 fee_, int24 tickSpacing_)
-    public
-  {
-    require(!_immutablesInitialized);
-
-    (factory, token0, token1, fee, tickSpacing) = (factory_, token0_, token1_, fee_, tickSpacing_);
-
-    maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(tickSpacing_);
-
-    _immutablesInitialized = true;
+    maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);
   }
 
   /// @dev Common checks for valid tick inputs.
@@ -172,6 +161,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
     external
     view
     override
+    noDelegateCall
     returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)
   {
     checkTicks(tickLower, tickUpper);
@@ -229,6 +219,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
     external
     view
     override
+    noDelegateCall
     returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s)
   {
     return observations.observe(
@@ -237,7 +228,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
   }
 
   /// @inheritdoc IKatanaV3PoolActions
-  function increaseObservationCardinalityNext(uint16 observationCardinalityNext) external override lock {
+  function increaseObservationCardinalityNext(uint16 observationCardinalityNext) external override lock noDelegateCall {
     uint16 observationCardinalityNextOld = slot0.observationCardinalityNext; // for the event
     uint16 observationCardinalityNextNew = observations.grow(observationCardinalityNextOld, observationCardinalityNext);
     slot0.observationCardinalityNext = observationCardinalityNextNew;
@@ -285,6 +276,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
   /// @return amount1 the amount of token1 owed to the pool, negative if the pool should pay the recipient
   function _modifyPosition(ModifyPositionParams memory params)
     private
+    noDelegateCall
     returns (Position.Info storage position, int256 amount0, int256 amount1)
   {
     checkTicks(params.tickLower, params.tickUpper);
@@ -408,6 +400,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
   }
 
   /// @inheritdoc IKatanaV3PoolActions
+  /// @dev noDelegateCall is applied indirectly via _modifyPosition
   function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes calldata data)
     external
     override
@@ -465,6 +458,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
   }
 
   /// @inheritdoc IKatanaV3PoolActions
+  /// @dev noDelegateCall is applied indirectly via _modifyPosition
   function burn(int24 tickLower, int24 tickUpper, uint128 amount)
     external
     override
@@ -548,7 +542,7 @@ contract KatanaV3Pool is IKatanaV3Pool {
     int256 amountSpecified,
     uint160 sqrtPriceLimitX96,
     bytes calldata data
-  ) external override returns (int256 amount0, int256 amount1) {
+  ) external override noDelegateCall returns (int256 amount0, int256 amount1) {
     require(amountSpecified != 0, "AS");
 
     Slot0 memory slot0Start = slot0;
@@ -727,7 +721,12 @@ contract KatanaV3Pool is IKatanaV3Pool {
   }
 
   /// @inheritdoc IKatanaV3PoolActions
-  function flash(address recipient, uint256 amount0, uint256 amount1, bytes calldata data) external override lock {
+  function flash(address recipient, uint256 amount0, uint256 amount1, bytes calldata data)
+    external
+    override
+    lock
+    noDelegateCall
+  {
     uint128 _liquidity = liquidity;
     require(_liquidity > 0, "L");
 
