@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat'
 import { BigNumber } from 'ethers'
-import { TickTest } from '../typechain/TickTest'
+import { TickTest } from '../../typechain/TickTest'
 import { expect } from './shared/expect'
 import { FeeAmount, getMaxLiquidityPerTick, TICK_SPACINGS } from './shared/utilities'
 
@@ -19,7 +19,7 @@ describe('Tick', () => {
   describe('#tickSpacingToMaxLiquidityPerTick', () => {
     it('returns the correct value for low fee', async () => {
       const maxLiquidityPerTick = await tickTest.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.LOW])
-      expect(maxLiquidityPerTick).to.eq('1917569901783203986719870431555990') // 110.8 bits
+      expect(maxLiquidityPerTick).to.eq('191757530477355301479181766273477') // 108 bits
       expect(maxLiquidityPerTick).to.eq(getMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.LOW]))
     })
     it('returns the correct value for medium fee', async () => {
