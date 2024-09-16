@@ -4,6 +4,7 @@ import { KatanaV3Factory } from '../../typechain/KatanaV3Factory'
 import { KatanaGovernanceMock } from '../../typechain/KatanaGovernanceMock'
 import { expect } from './shared/expect'
 import { factoryFixture } from './shared/fixtures'
+import { bytecode as poolProxyBytecode } from '../../out/KatanaV3PoolProxy.sol/KatanaV3PoolProxy.json'
 import snapshotGasCost from './shared/snapshotGasCost'
 
 import { FeeAmount, getCreate2Address, TICK_SPACINGS } from './shared/utilities'
@@ -31,7 +32,7 @@ describe('KatanaV3Factory', () => {
   })
 
   before('load pool bytecode', async () => {
-    poolBytecode = (await ethers.getContractFactory('KatanaV3PoolProxy')).bytecode
+    poolBytecode = poolProxyBytecode.object
   })
 
   beforeEach('deploy factory', async () => {

@@ -31,6 +31,9 @@ const config: HardhatUserConfig = {
 	networks: {
 		"ronin-testnet": testnet,
 		"ronin-mainnet": mainnet,
+		hardhat: {
+			chainId: 2020,
+		},
 	},
 
 	solidity: {

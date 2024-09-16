@@ -4,6 +4,10 @@ pragma solidity =0.7.6;
 import "../interfaces/IERC20Minimal.sol";
 
 contract TestERC20 is IERC20Minimal {
+  string public constant name = "Test ERC20";
+  string public constant symbol = "TEST";
+  uint8 public constant decimals = 18;
+
   mapping(address => uint256) public override balanceOf;
   mapping(address => mapping(address => uint256)) public override allowance;
 
