@@ -1,5 +1,5 @@
 import { BigNumber, constants } from "ethers";
-import { ethers } from "hardhat";
+import { ethers, waffle } from "hardhat";
 import { MockTimeKatanaV3Pool } from '../../../typechain/MockTimeKatanaV3Pool'
 import { TestERC20 } from '../../../typechain/TestERC20'
 import { KatanaV3Factory } from '../../../typechain/KatanaV3Factory'
@@ -7,6 +7,8 @@ import { TestKatanaV3Callee } from '../../../typechain/TestKatanaV3Callee'
 import { TestKatanaV3Router } from '../../../typechain/TestKatanaV3Router'
 import { MockTimeKatanaV3PoolDeployer } from '../../../typechain/MockTimeKatanaV3PoolDeployer'
 import { KatanaGovernanceMock } from '../../../typechain/KatanaGovernanceMock'
+import { KatanaV3PoolBeacon } from "../../../typechain";
+import { bytecode as beaconBytecode, abi as beaconABI } from '../../../out/KatanaV3PoolBeacon.sol/KatanaV3PoolBeacon.json'
 
 import { Fixture, loadFixture } from "ethereum-waffle";
 import { expect } from "chai";
@@ -41,9 +43,14 @@ export const factoryFixture: Fixture<FactoryFixture> = async function ([
   await poolImplementation.deployed()
 
   // Deploy the KatanaV3PoolBeacon contract
-  const beaconFactory = await ethers.getContractFactory("KatanaV3PoolBeacon", deployer)
-  const beacon = await beaconFactory.deploy(poolImplementation.address);
-  await beacon.deployed()
+  const beacon = (await waffle.deployContract(
+    deployer,
+    {
+      bytecode: beaconBytecode.object,
+      abi: beaconABI,
+    },
+    [poolImplementation.address]
+  )) as KatanaV3PoolBeacon
 
   // Deploy the KatanaV3Factory implementation contract
   const factoryImplementationFactory = await ethers.getContractFactory("KatanaV3Factory", deployer)
