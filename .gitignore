@@ -18,3 +18,7 @@ yarn-error.log
 .yarnrc.yml
 
 .vscode/
+
+cache_hardhat/
+artifacts/
+typechain/

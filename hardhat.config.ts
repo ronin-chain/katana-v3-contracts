@@ -1,4 +1,8 @@
-import "hardhat-deploy";
+import "@nomicfoundation/hardhat-foundry";
+import 'hardhat-typechain'
+import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-waffle'
+import '@nomiclabs/hardhat-etherscan'
 import {
 	HardhatUserConfig,
 	NetworkUserConfig,
@@ -27,7 +31,20 @@ const config: HardhatUserConfig = {
 	networks: {
 		"ronin-testnet": testnet,
 		"ronin-mainnet": mainnet,
+		hardhat: {
+			chainId: 2020,
+		},
 	},
+
+	solidity: {
+    version: '0.7.6',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 250,
+      },
+    },
+  },
 };
 
 export default config;
