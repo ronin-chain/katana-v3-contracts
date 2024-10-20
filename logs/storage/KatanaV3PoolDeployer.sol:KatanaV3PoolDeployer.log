@@ -1,2 +1,0 @@
-src/core/KatanaV3PoolDeployer.sol:KatanaV3PoolDeployer:beacon (storage_slot: 0) (offset: 0) (type: address) (numberOfBytes: 20)
-src/core/KatanaV3PoolDeployer.sol:KatanaV3PoolDeployer:parameters (storage_slot: 1) (offset: 0) (type: struct KatanaV3PoolDeployer.Parameters) (numberOfBytes: 96)
