@@ -1,8 +1,0 @@
-src/core/KatanaV3Factory.sol:KatanaV3Factory:beacon (storage_slot: 0) (offset: 0) (type: address) (numberOfBytes: 20)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:parameters (storage_slot: 1) (offset: 0) (type: struct KatanaV3PoolDeployer.Parameters) (numberOfBytes: 96)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:owner (storage_slot: 4) (offset: 0) (type: address) (numberOfBytes: 20)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:treasury (storage_slot: 5) (offset: 0) (type: address) (numberOfBytes: 20)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:flashLoanEnabled (storage_slot: 5) (offset: 20) (type: bool) (numberOfBytes: 1)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:feeAmountTickSpacing (storage_slot: 6) (offset: 0) (type: mapping(uint24 => int24)) (numberOfBytes: 32)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:feeAmountProtocol (storage_slot: 7) (offset: 0) (type: mapping(uint24 => struct KatanaV3Factory.Fraction)) (numberOfBytes: 32)
-src/core/KatanaV3Factory.sol:KatanaV3Factory:getPool (storage_slot: 8) (offset: 0) (type: mapping(address => mapping(address => mapping(uint24 => address)))) (numberOfBytes: 32)

@@ -2,6 +2,7 @@
 pragma solidity =0.7.6;
 
 import "src/core/interfaces/IKatanaV3Pool.sol";
+import "src/core/interfaces/IKatanaV3Factory.sol";
 import "./PoolAddress.sol";
 
 /// @notice Provides validation for callbacks from Katana V3 Pools
@@ -31,5 +32,6 @@ library CallbackValidation {
   {
     pool = IKatanaV3Pool(PoolAddress.computeAddress(factory, poolKey));
     require(msg.sender == address(pool));
+    require(msg.sender == IKatanaV3Factory(factory).getPool(poolKey.token0, poolKey.token1, poolKey.fee));
   }
 }
