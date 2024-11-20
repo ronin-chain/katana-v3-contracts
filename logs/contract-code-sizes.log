@@ -1,70 +1,70 @@
-| Contract                           | Size (B) | Margin (B) |
-|------------------------------------|----------|------------|
-| Address                            |       86 |     24,490 |
-| AddressStringUtil                  |       86 |     24,490 |
-| AuthorizationLib                   |       86 |     24,490 |
-| Base64                             |       86 |     24,490 |
-| BeaconProxy                        |      759 |     23,817 |
-| BitMath                            |       86 |     24,490 |
-| BytesLib                           |       86 |     24,490 |
-| CallbackValidation                 |       86 |     24,490 |
-| ChainId                            |       86 |     24,490 |
-| Create2                            |       86 |     24,490 |
-| ERC20                              |    2,546 |     22,030 |
-| ERC20Mock                          |    3,518 |     21,058 |
-| ERC721                             |    6,557 |     18,019 |
-| EnumerableMap                      |       86 |     24,490 |
-| EnumerableSet                      |       86 |     24,490 |
-| FixedPoint128                      |       86 |     24,490 |
-| FixedPoint96                       |       86 |     24,490 |
-| FullMath                           |       86 |     24,490 |
-| HexStrings                         |       86 |     24,490 |
-| KatanaGovernanceMock               |    2,388 |     22,188 |
-| KatanaInterfaceMulticall           |    1,295 |     23,281 |
-| KatanaV2Library                    |       86 |     24,490 |
-| KatanaV2LibraryTestnet             |       86 |     24,490 |
-| KatanaV3Factory                    |    4,132 |     20,444 |
-| KatanaV3Pool                       |   21,545 |      3,031 |
-| KatanaV3PoolBeacon                 |    4,246 |     20,330 |
-| KatanaV3PoolProxy                  |    1,209 |     23,367 |
-| LiquidityAmounts                   |       86 |     24,490 |
-| LiquidityMath                      |       86 |     24,490 |
-| LowGasSafeMath                     |       86 |     24,490 |
-| MixedRouteQuoterV1                 |    7,384 |     17,192 |
-| MixedRouteQuoterV1Testnet          |    7,384 |     17,192 |
-| NFTDescriptor                      |   23,372 |      1,204 |
-| NFTSVG                             |       86 |     24,490 |
-| NonfungiblePositionManager         |   24,284 |        292 |
-| NonfungibleTokenPositionDescriptor |    5,097 |     19,479 |
-| Oracle                             |       86 |     24,490 |
-| OracleLibrary                      |       86 |     24,490 |
-| PairFlash                          |    5,592 |     18,984 |
-| Path                               |       86 |     24,490 |
-| PoolAddress                        |       86 |     24,490 |
-| PoolTicksCounter                   |       86 |     24,490 |
-| Position                           |       86 |     24,490 |
-| PositionKey                        |       86 |     24,490 |
-| PositionValue                      |       86 |     24,490 |
-| Quoter                             |    3,986 |     20,590 |
-| QuoterV2                           |    7,183 |     17,393 |
-| SafeCast                           |       86 |     24,490 |
-| SafeERC20Namer                     |       86 |     24,490 |
-| SafeMath                           |       86 |     24,490 |
-| SignedSafeMath                     |       86 |     24,490 |
-| SqrtPriceMath                      |       86 |     24,490 |
-| SqrtPriceMathPartial               |       86 |     24,490 |
-| Strings                            |       86 |     24,490 |
-| SwapMath                           |       86 |     24,490 |
-| SwapRouter                         |   10,109 |     14,467 |
-| Tick                               |       86 |     24,490 |
-| TickBitmap                         |       86 |     24,490 |
-| TickLens                           |    1,322 |     23,254 |
-| TickMath                           |       86 |     24,490 |
-| TokenRatioSortOrder                |       86 |     24,490 |
-| TransferHelper                     |       86 |     24,490 |
-| TransparentUpgradeableProxy        |    2,091 |     22,485 |
-| UnsafeMath                         |       86 |     24,490 |
-| UpgradeableBeacon                  |    1,153 |     23,423 |
-| UpgradeableProxy                   |      738 |     23,838 |
-| V3Migrator                         |    6,529 |     18,047 |
+| Contract                           | Runtime Size (B) | Initcode Size (B) | Runtime Margin (B) | Initcode Margin (B) |
+|------------------------------------|------------------|-------------------|--------------------|---------------------|
+| Address                            |               86 |               121 |             24,490 |              49,031 |
+| AddressStringUtil                  |               86 |               121 |             24,490 |              49,031 |
+| AuthorizationLib                   |               86 |               121 |             24,490 |              49,031 |
+| Base64                             |               86 |               121 |             24,490 |              49,031 |
+| BeaconProxy                        |              759 |             2,116 |             23,817 |              47,036 |
+| BitMath                            |               86 |               121 |             24,490 |              49,031 |
+| BytesLib                           |               86 |               121 |             24,490 |              49,031 |
+| CallbackValidation                 |               86 |               121 |             24,490 |              49,031 |
+| ChainId                            |               86 |               121 |             24,490 |              49,031 |
+| Create2                            |               86 |               121 |             24,490 |              49,031 |
+| ERC20                              |            2,546 |             3,214 |             22,030 |              45,938 |
+| ERC20Mock                          |            3,518 |             4,579 |             21,058 |              44,573 |
+| ERC721                             |            6,557 |             7,419 |             18,019 |              41,733 |
+| EnumerableMap                      |               86 |               121 |             24,490 |              49,031 |
+| EnumerableSet                      |               86 |               121 |             24,490 |              49,031 |
+| FixedPoint128                      |               86 |               121 |             24,490 |              49,031 |
+| FixedPoint96                       |               86 |               121 |             24,490 |              49,031 |
+| FullMath                           |               86 |               121 |             24,490 |              49,031 |
+| HexStrings                         |               86 |               121 |             24,490 |              49,031 |
+| KatanaGovernanceMock               |            2,388 |             2,516 |             22,188 |              46,636 |
+| KatanaInterfaceMulticall           |            1,295 |             1,327 |             23,281 |              47,825 |
+| KatanaV2Library                    |               86 |               121 |             24,490 |              49,031 |
+| KatanaV2LibraryTestnet             |               86 |               121 |             24,490 |              49,031 |
+| KatanaV3Factory                    |            4,132 |             4,183 |             20,444 |              44,969 |
+| KatanaV3Pool                       |           21,545 |            21,598 |              3,031 |              27,554 |
+| KatanaV3PoolBeacon                 |            4,246 |             4,588 |             20,330 |              44,564 |
+| KatanaV3PoolProxy                  |            1,209 |             2,751 |             23,367 |              46,401 |
+| LiquidityAmounts                   |               86 |               121 |             24,490 |              49,031 |
+| LiquidityMath                      |               86 |               121 |             24,490 |              49,031 |
+| LowGasSafeMath                     |               86 |               121 |             24,490 |              49,031 |
+| MixedRouteQuoterV1                 |            7,384 |             7,800 |             17,192 |              41,352 |
+| MixedRouteQuoterV1Testnet          |            7,384 |             7,800 |             17,192 |              41,352 |
+| NFTDescriptor                      |           23,372 |            23,410 |              1,204 |              25,742 |
+| NFTSVG                             |               86 |               121 |             24,490 |              49,031 |
+| NonfungiblePositionManager         |           24,284 |            25,375 |                292 |              23,777 |
+| NonfungibleTokenPositionDescriptor |            5,097 |             5,289 |             19,479 |              43,863 |
+| Oracle                             |               86 |               121 |             24,490 |              49,031 |
+| OracleLibrary                      |               86 |               121 |             24,490 |              49,031 |
+| PairFlash                          |            5,592 |             6,058 |             18,984 |              43,094 |
+| Path                               |               86 |               121 |             24,490 |              49,031 |
+| PoolAddress                        |               86 |               121 |             24,490 |              49,031 |
+| PoolTicksCounter                   |               86 |               121 |             24,490 |              49,031 |
+| Position                           |               86 |               121 |             24,490 |              49,031 |
+| PositionKey                        |               86 |               121 |             24,490 |              49,031 |
+| PositionValue                      |               86 |               121 |             24,490 |              49,031 |
+| Quoter                             |            3,986 |             4,338 |             20,590 |              44,814 |
+| QuoterV2                           |            7,183 |             7,551 |             17,393 |              41,601 |
+| SafeCast                           |               86 |               121 |             24,490 |              49,031 |
+| SafeERC20Namer                     |               86 |               121 |             24,490 |              49,031 |
+| SafeMath                           |               86 |               121 |             24,490 |              49,031 |
+| SignedSafeMath                     |               86 |               121 |             24,490 |              49,031 |
+| SqrtPriceMath                      |               86 |               121 |             24,490 |              49,031 |
+| SqrtPriceMathPartial               |               86 |               121 |             24,490 |              49,031 |
+| Strings                            |               86 |               121 |             24,490 |              49,031 |
+| SwapMath                           |               86 |               121 |             24,490 |              49,031 |
+| SwapRouter                         |           10,109 |            10,523 |             14,467 |              38,629 |
+| Tick                               |               86 |               121 |             24,490 |              49,031 |
+| TickBitmap                         |               86 |               121 |             24,490 |              49,031 |
+| TickLens                           |            1,322 |             1,354 |             23,254 |              47,798 |
+| TickMath                           |               86 |               121 |             24,490 |              49,031 |
+| TokenRatioSortOrder                |               86 |               121 |             24,490 |              49,031 |
+| TransferHelper                     |               86 |               121 |             24,490 |              49,031 |
+| TransparentUpgradeableProxy        |            2,091 |             3,196 |             22,485 |              45,956 |
+| UnsafeMath                         |               86 |               121 |             24,490 |              49,031 |
+| UpgradeableBeacon                  |            1,153 |             1,493 |             23,423 |              47,659 |
+| UpgradeableProxy                   |              738 |             1,743 |             23,838 |              47,409 |
+| V3Migrator                         |            6,529 |             6,984 |             18,047 |              42,168 |
 
