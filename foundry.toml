@@ -3,15 +3,13 @@ src = "src"
 out = "out"
 script = "script"
 libs = ["lib"]
-ffi = true
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
 
-solc = '0.8.23'
+solc = '0.7.6'
+optimizer_runs = 250
 evm_version = 'istanbul'
 use_literal_content = true
-extra_output = ["devdoc", "userdoc", "storagelayout"]
-fs_permissions = [{ access = "read-write", path = "./" }]
 
 [fmt]
 tab_width = 2
