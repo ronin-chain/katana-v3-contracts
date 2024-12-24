@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KatanaV3Pool gas tests fee is off #burn above current price burn entire position after some time passes 1`] = `103968`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn above current price burn when only position using ticks 1`] = `103968`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn above current price entire position burn but other positions are using the ticks 1`] = `105493`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn above current price partial position burn 1`] = `110293`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn around current price burn entire position after some time passes 1`] = `121263`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn around current price burn when only position using ticks 1`] = `116136`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn around current price entire position burn but other positions are using the ticks 1`] = `110304`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn around current price partial position burn 1`] = `115104`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn below current price burn entire position after some time passes 1`] = `113426`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn below current price burn when only position using ticks 1`] = `113426`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn below current price entire position burn but other positions are using the ticks 1`] = `106116`;
+
+exports[`KatanaV3Pool gas tests fee is off #burn below current price partial position burn 1`] = `110916`;
+
+exports[`KatanaV3Pool gas tests fee is off #collect close to worst case 1`] = `58368`;
+
+exports[`KatanaV3Pool gas tests fee is off #increaseObservationCardinalityNext grow by 1 slot 1`] = `61182`;
+
+exports[`KatanaV3Pool gas tests fee is off #increaseObservationCardinalityNext no op 1`] = `34761`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint above current price add to position after some time passes 1`] = `127703`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint above current price add to position existing 1`] = `127703`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint above current price new position mint first in range 1`] = `246401`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint above current price second position in same range 1`] = `144803`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint around current price add to position after some time passes 1`] = `169664`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint around current price add to position existing 1`] = `160454`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint around current price new position mint first in range 1`] = `350845`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint around current price second position in same range 1`] = `177554`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint below current price add to position after some time passes 1`] = `128255`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint below current price add to position existing 1`] = `128255`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint below current price new position mint first in range 1`] = `328119`;
+
+exports[`KatanaV3Pool gas tests fee is off #mint below current price second position in same range 1`] = `145355`;
+
+exports[`KatanaV3Pool gas tests fee is off #poke best case 1`] = `64303`;
+
+exports[`KatanaV3Pool gas tests fee is off #snapshotCumulativesInside tick above 1`] = `39975`;
+
+exports[`KatanaV3Pool gas tests fee is off #snapshotCumulativesInside tick below 1`] = `39937`;
+
+exports[`KatanaV3Pool gas tests fee is off #snapshotCumulativesInside tick inside 1`] = `47611`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 first swap in block moves tick, no initialized crossings 1`] = `141015`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 first swap in block with no tick movement 1`] = `125086`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 first swap in block, large swap crossing a single initialized tick 1`] = `166318`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 first swap in block, large swap crossing several initialized ticks 1`] = `219987`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 first swap in block, large swap, no initialized crossings 1`] = `155716`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 large swap crossing several initialized ticks after some time passes 1`] = `219987`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 large swap crossing several initialized ticks second time after some time passes 1`] = `239187`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 second swap in block moves tick, no initialized crossings 1`] = `141015`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 second swap in block with no tick movement 1`] = `125197`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 second swap in block, large swap crossing a single initialized tick 1`] = `152826`;
+
+exports[`KatanaV3Pool gas tests fee is off #swapExact0For1 second swap in block, large swap crossing several initialized ticks 1`] = `206473`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn above current price burn entire position after some time passes 1`] = `103968`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn above current price burn when only position using ticks 1`] = `103968`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn above current price entire position burn but other positions are using the ticks 1`] = `105493`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn above current price partial position burn 1`] = `110293`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn around current price burn entire position after some time passes 1`] = `121263`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn around current price burn when only position using ticks 1`] = `116136`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn around current price entire position burn but other positions are using the ticks 1`] = `110304`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn around current price partial position burn 1`] = `115104`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn below current price burn entire position after some time passes 1`] = `113426`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn below current price burn when only position using ticks 1`] = `113426`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn below current price entire position burn but other positions are using the ticks 1`] = `106116`;
+
+exports[`KatanaV3Pool gas tests fee is on #burn below current price partial position burn 1`] = `110916`;
+
+exports[`KatanaV3Pool gas tests fee is on #collect close to worst case 1`] = `58368`;
+
+exports[`KatanaV3Pool gas tests fee is on #increaseObservationCardinalityNext grow by 1 slot 1`] = `61182`;
+
+exports[`KatanaV3Pool gas tests fee is on #increaseObservationCardinalityNext no op 1`] = `34761`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint above current price add to position after some time passes 1`] = `127703`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint above current price add to position existing 1`] = `127703`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint above current price new position mint first in range 1`] = `246401`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint above current price second position in same range 1`] = `144803`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint around current price add to position after some time passes 1`] = `169664`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint around current price add to position existing 1`] = `160454`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint around current price new position mint first in range 1`] = `350845`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint around current price second position in same range 1`] = `177554`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint below current price add to position after some time passes 1`] = `128255`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint below current price add to position existing 1`] = `128255`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint below current price new position mint first in range 1`] = `328119`;
+
+exports[`KatanaV3Pool gas tests fee is on #mint below current price second position in same range 1`] = `145355`;
+
+exports[`KatanaV3Pool gas tests fee is on #poke best case 1`] = `64303`;
+
+exports[`KatanaV3Pool gas tests fee is on #snapshotCumulativesInside tick above 1`] = `39975`;
+
+exports[`KatanaV3Pool gas tests fee is on #snapshotCumulativesInside tick below 1`] = `39937`;
+
+exports[`KatanaV3Pool gas tests fee is on #snapshotCumulativesInside tick inside 1`] = `47611`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 first swap in block moves tick, no initialized crossings 1`] = `165132`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 first swap in block with no tick movement 1`] = `148893`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 first swap in block, large swap crossing a single initialized tick 1`] = `190746`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 first swap in block, large swap crossing several initialized ticks 1`] = `245346`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 first swap in block, large swap, no initialized crossings 1`] = `180454`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 large swap crossing several initialized ticks after some time passes 1`] = `245346`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 large swap crossing several initialized ticks second time after some time passes 1`] = `264546`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 second swap in block moves tick, no initialized crossings 1`] = `165132`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 second swap in block with no tick movement 1`] = `149004`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 second swap in block, large swap crossing a single initialized tick 1`] = `176943`;
+
+exports[`KatanaV3Pool gas tests fee is on #swapExact0For1 second swap in block, large swap crossing several initialized ticks 1`] = `231521`;
