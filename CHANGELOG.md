@@ -1,0 +1,1 @@
+VERSION=v1.0.0 - SHA: 1d58b1b5f46f0eb9e450ee1097eaaa0ee79e8503
