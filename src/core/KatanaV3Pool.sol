@@ -414,8 +414,6 @@ contract KatanaV3Pool is IKatanaV3Pool {
     lock
     returns (uint256 amount0, uint256 amount1)
   {
-    require(msg.sender == positionManager, "IPM");
-
     require(amount > 0);
     (, int256 amount0Int, int256 amount1Int) = _modifyPosition(
       ModifyPositionParams({
@@ -556,6 +554,10 @@ contract KatanaV3Pool is IKatanaV3Pool {
     uint160 sqrtPriceLimitX96,
     bytes calldata data
   ) external override returns (int256 amount0, int256 amount1) {
+<<<<<<< Updated upstream
+=======
+    // when quoting, we don't need to check authorization
+>>>>>>> Stashed changes
     require(amountSpecified != 0, "AS");
 
     Slot0 memory slot0Start = slot0;
