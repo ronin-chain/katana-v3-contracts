@@ -6,6 +6,9 @@ on:
       - mainnet
       - testnet
   pull_request:
+    branches:
+      - mainnet
+      - testnet
 
 jobs:
   echidna:
@@ -35,7 +38,7 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: stable
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
@@ -52,9 +55,9 @@ jobs:
 
       - name: Install echidna
         run: |
-          sudo wget -O /tmp/echidna-test.tar.gz https://github.com/crytic/echidna/releases/download/v1.7.3/echidna-test-1.7.3-Ubuntu-18.04.tar.gz
-          sudo tar -xf /tmp/echidna-test.tar.gz -C /usr/bin
-          sudo chmod +x /usr/bin/echidna-test
+          sudo wget -O /tmp/echidna.tar.gz https://github.com/crytic/echidna/releases/download/v2.2.6/echidna-2.2.6-x86_64-linux.tar.gz
+          sudo tar -xf /tmp/echidna.tar.gz -C /usr/bin
+          sudo chmod +x /usr/bin/echidna
 
       - name: Run ${{ matrix.testName }}
-        run: echidna-test src/core/test/** --contract ${{ matrix.testName }} --config echidna.config.yml
+        run: echidna src/core/test/${{ matrix.testName }}.sol --contract ${{ matrix.testName }} --config echidna.config.yml
