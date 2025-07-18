@@ -2,7 +2,7 @@
 
 exports[`NonfungiblePositionManager #collect gas transfers both 1`] = `151406`;
 
-exports[`NonfungiblePositionManager #createAndInitializePoolIfNecessary gas 1`] = `635068`;
+exports[`NonfungiblePositionManager #createAndInitializePoolIfNecessary gas 1`] = `626287`;
 
 exports[`NonfungiblePositionManager #decreaseLiquidity gas complete decrease 1`] = `188611`;
 
