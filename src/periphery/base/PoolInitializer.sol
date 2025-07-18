@@ -18,8 +18,6 @@ abstract contract PoolInitializer is IPoolInitializer, PeripheryImmutableState {
     override
     returns (address pool)
   {
-    AuthorizationLib.checkPair(governance, token0, token1);
-
     require(token0 < token1);
     pool = IKatanaV3Factory(factory).getPool(token0, token1, fee);
 

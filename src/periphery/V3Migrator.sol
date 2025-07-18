@@ -102,7 +102,6 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, Multicall, SelfPerm
     override
     returns (address pool)
   {
-    AuthorizationLib.checkPair(governance, token0, token1);
     return INonfungiblePositionManager(nonfungiblePositionManager).createAndInitializePoolIfNecessary(
       token0, token1, fee, sqrtPriceX96
     );

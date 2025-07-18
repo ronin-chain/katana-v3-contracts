@@ -23,8 +23,6 @@ import "./base/PeripheryValidation.sol";
 import "./base/SelfPermit.sol";
 import "./base/PoolInitializer.sol";
 
-import "../external/libraries/AuthorizationLib.sol";
-
 /// @title NFT positions
 /// @notice Wraps Katana V3 positions in the ERC721 non-fungible token interface
 contract NonfungiblePositionManager is
