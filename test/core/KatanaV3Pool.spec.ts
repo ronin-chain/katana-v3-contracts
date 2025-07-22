@@ -76,7 +76,15 @@ describe('KatanaV3Pool', () => {
   })
 
   beforeEach('deploy fixture', async () => {
-    ;({ token0, token1, token2, factory, governance, createPool, swapTargetCallee: swapTarget } = await loadFixture(poolFixture))
+    ;({
+      token0,
+      token1,
+      token2,
+      factory,
+      governance,
+      createPool,
+      swapTargetCallee: swapTarget,
+    } = await loadFixture(poolFixture))
 
     const oldCreatePool = createPool
     createPool = async (_feeAmount, _tickSpacing) => {
@@ -95,7 +103,6 @@ describe('KatanaV3Pool', () => {
         token1,
         swapTarget,
         pool,
-        governance,
       }))
       minTick = getMinTick(_tickSpacing)
       maxTick = getMaxTick(_tickSpacing)
@@ -111,10 +118,10 @@ describe('KatanaV3Pool', () => {
       method: 'hardhat_impersonateAccount',
       params: [governance.address],
     })
-    await network.provider.send("hardhat_setBalance", [
+    await network.provider.send('hardhat_setBalance', [
       governance.address,
-      "0xDE0B6B3A7640000", // 1 ETH
-    ]);
+      '0xDE0B6B3A7640000', // 1 ETH
+    ])
     governanceSigner = await (ethers as any).getSigner(governance.address)
   })
 
@@ -536,13 +543,8 @@ describe('KatanaV3Pool', () => {
         await expect(pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 0)).to.be.reverted
 
         await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 1)
-        let {
-          liquidity,
-          feeGrowthInside0LastX128,
-          feeGrowthInside1LastX128,
-          tokensOwed1,
-          tokensOwed0,
-        } = await pool.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))
+        let { liquidity, feeGrowthInside0LastX128, feeGrowthInside1LastX128, tokensOwed1, tokensOwed0 } =
+          await pool.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))
         expect(liquidity).to.eq(1)
         expect(feeGrowthInside0LastX128).to.eq('102084710076281216349243831104605583')
         expect(feeGrowthInside1LastX128).to.eq('10208471007628121634924383110460558')
@@ -550,13 +552,8 @@ describe('KatanaV3Pool', () => {
         expect(tokensOwed1, 'tokens owed 1 before').to.eq(0)
 
         await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 1)
-        ;({
-          liquidity,
-          feeGrowthInside0LastX128,
-          feeGrowthInside1LastX128,
-          tokensOwed1,
-          tokensOwed0,
-        } = await pool.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing)))
+        ;({ liquidity, feeGrowthInside0LastX128, feeGrowthInside1LastX128, tokensOwed1, tokensOwed0 } =
+          await pool.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing)))
         expect(liquidity).to.eq(0)
         expect(feeGrowthInside0LastX128).to.eq('102084710076281216349243831104605583')
         expect(feeGrowthInside1LastX128).to.eq('10208471007628121634924383110460558')
@@ -590,13 +587,8 @@ describe('KatanaV3Pool', () => {
       await swapExact0For1(expandTo18Decimals(1), wallet.address)
       await swapExact1For0(expandTo18Decimals(1), wallet.address)
       await pool.connect(other).burn(minTick, maxTick, expandTo18Decimals(1))
-      const {
-        liquidity,
-        tokensOwed0,
-        tokensOwed1,
-        feeGrowthInside0LastX128,
-        feeGrowthInside1LastX128,
-      } = await pool.positions(getPositionKey(other.address, minTick, maxTick))
+      const { liquidity, tokensOwed0, tokensOwed1, feeGrowthInside0LastX128, feeGrowthInside1LastX128 } =
+        await pool.positions(getPositionKey(other.address, minTick, maxTick))
       expect(liquidity).to.eq(0)
       expect(tokensOwed0).to.not.eq(0)
       expect(tokensOwed1).to.not.eq(0)
@@ -1216,7 +1208,7 @@ describe('KatanaV3Pool', () => {
       })
 
       it('fees collected are similar between token0 and token1', async () => {
-        await pool.setFeeProtocol(1, 5);
+        await pool.setFeeProtocol(1, 5)
 
         await swapAndGetFeesOwed({
           amount: expandTo18Decimals(1),
@@ -1406,7 +1398,7 @@ describe('KatanaV3Pool', () => {
   describe('#flash', () => {
     beforeEach('allow flash loan', async () => {
       await factory.connect(governanceSigner).toggleFlashLoanPermission()
-      expect(await factory.flashLoanEnabled(), "flash loan is enabled").to.be.true
+      expect(await factory.flashLoanEnabled(), 'flash loan is enabled').to.be.true
     })
 
     it('fails if not initialized', async () => {
@@ -1615,12 +1607,8 @@ describe('KatanaV3Pool', () => {
         expect(observationCardinality).to.eq(1)
         expect(observationIndex).to.eq(0)
         expect(observationCardinalityNext).to.eq(1)
-        const {
-          secondsPerLiquidityCumulativeX128,
-          tickCumulative,
-          initialized,
-          blockTimestamp,
-        } = await pool.observations(0)
+        const { secondsPerLiquidityCumulativeX128, tickCumulative, initialized, blockTimestamp } =
+          await pool.observations(0)
         expect(secondsPerLiquidityCumulativeX128).to.eq(0)
         expect(tickCumulative).to.eq(0)
         expect(initialized).to.eq(true)
@@ -1654,7 +1642,7 @@ describe('KatanaV3Pool', () => {
       const reentrant = (await (
         await ethers.getContractFactory('TestKatanaV3ReentrantCallee')
       ).deploy()) as TestKatanaV3ReentrantCallee
-      await governance.setRouter(reentrant.address)
+
       // the tests happen in solidity
       await expect(reentrant.swapToReenter(pool.address)).to.be.revertedWith('Unable to reenter')
     })
@@ -1687,22 +1675,16 @@ describe('KatanaV3Pool', () => {
       await expect(pool.snapshotCumulativesInside(tickLower, tickUpper + tickSpacing)).to.be.reverted
     })
     it('is zero immediately after initialize', async () => {
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(0)
       expect(tickCumulativeInside).to.eq(0)
       expect(secondsInside).to.eq(0)
     })
     it('increases by expected amount when time elapses in the range', async () => {
       await pool.advanceTime(5)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(5).shl(128).div(10))
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(0)
       expect(secondsInside).to.eq(5)
@@ -1711,11 +1693,8 @@ describe('KatanaV3Pool', () => {
       await pool.advanceTime(5)
       await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)
       await pool.advanceTime(7)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(5).shl(128).div(10))
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(0)
       expect(secondsInside).to.eq(5)
@@ -1724,11 +1703,8 @@ describe('KatanaV3Pool', () => {
       await pool.advanceTime(5)
       await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)
       await pool.advanceTime(7)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(5).shl(128).div(10))
       // tick is 0 for 5 seconds, then not in range
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(0)
@@ -1739,11 +1715,8 @@ describe('KatanaV3Pool', () => {
       await pool.advanceTime(5)
       await swapToHigherPrice(encodePriceSqrt(1, 1), wallet.address)
       await pool.advanceTime(7)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(7).shl(128).div(10))
       // tick is not in range then tick is 0 for 7 seconds
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(0)
@@ -1754,11 +1727,8 @@ describe('KatanaV3Pool', () => {
       await pool.advanceTime(5)
       await swapToLowerPrice(encodePriceSqrt(1, 1), wallet.address)
       await pool.advanceTime(7)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(7).shl(128).div(10))
       expect((await pool.slot0()).tick).to.eq(-1) // justify the -7 tick cumulative inside value
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(-7)
@@ -1769,11 +1739,8 @@ describe('KatanaV3Pool', () => {
       await mint(wallet.address, tickUpper, getMaxTick(tickSpacing), 15)
       await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)
       await pool.advanceTime(8)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickUpper, getMaxTick(tickSpacing))
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickUpper, getMaxTick(tickSpacing))
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(8).shl(128).div(15))
       // the tick of 2/1 is 6931
       // 8 seconds * 6931 = 55448
@@ -1785,11 +1752,8 @@ describe('KatanaV3Pool', () => {
       await pool.advanceTime(5)
       await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)
       await pool.advanceTime(8)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(tickLower, tickUpper)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(tickLower, tickUpper)
       expect(secondsPerLiquidityInsideX128).to.eq(BigNumber.from(5).shl(128).div(25))
       expect(tickCumulativeInside, 'tickCumulativeInside').to.eq(0)
       expect(secondsInside).to.eq(5)
@@ -1806,11 +1770,8 @@ describe('KatanaV3Pool', () => {
       // 13 seconds in starting range, then 3 seconds in newly minted range
       await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)
       await pool.advanceTime(3)
-      const {
-        secondsPerLiquidityInsideX128,
-        tickCumulativeInside,
-        secondsInside,
-      } = await pool.snapshotCumulativesInside(getMinTick(tickSpacing), tickLower)
+      const { secondsPerLiquidityInsideX128, tickCumulativeInside, secondsInside } =
+        await pool.snapshotCumulativesInside(getMinTick(tickSpacing), tickLower)
       const expectedDiffSecondsPerLiquidity = BigNumber.from(3).shl(128).div(15)
       expect(secondsPerLiquidityInsideX128.sub(secondsPerLiquidityInsideX128Start)).to.eq(
         expectedDiffSecondsPerLiquidity
@@ -1827,7 +1788,7 @@ describe('KatanaV3Pool', () => {
   describe('fees overflow scenarios', async () => {
     beforeEach('allow flash loan', async () => {
       await factory.connect(governanceSigner).toggleFlashLoanPermission()
-      expect(await factory.flashLoanEnabled(), "flash loan is enabled").to.be.true
+      expect(await factory.flashLoanEnabled(), 'flash loan is enabled').to.be.true
     })
 
     it('up to max uint 128', async () => {

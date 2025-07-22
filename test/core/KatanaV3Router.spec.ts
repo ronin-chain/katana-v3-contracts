@@ -74,7 +74,6 @@ describe('KatanaV3Pool', () => {
         token0: firstToken,
         token1: secondToken,
         pool: pool,
-        governance: governance,
       })
       minTick = getMinTick(spacing)
       maxTick = getMaxTick(spacing)
@@ -119,7 +118,6 @@ describe('KatanaV3Pool', () => {
         swapTarget: swapTargetRouter,
         poolInput: pool0,
         poolOutput: pool1,
-        governance: governance,
       })
 
       const method = ForExact0 ? swapForExact0Multi : swapForExact1Multi

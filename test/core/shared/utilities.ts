@@ -110,16 +110,12 @@ export function createPoolFunctions({
   token0,
   token1,
   pool,
-  governance,
 }: {
   swapTarget: TestKatanaV3Callee
   token0: TestERC20
   token1: TestERC20
   pool: MockTimeKatanaV3Pool
-  governance: KatanaGovernanceMock
 }): PoolFunctions {
-  governance.setPositionManager(swapTarget.address)
-
   async function swapToSqrtPrice(
     inputToken: Contract,
     targetPrice: BigNumberish,
@@ -128,7 +124,6 @@ export function createPoolFunctions({
     const method = inputToken === token0 ? swapTarget.swapToLowerSqrtPrice : swapTarget.swapToHigherSqrtPrice
 
     await inputToken.approve(swapTarget.address, constants.MaxUint256)
-    await governance.setRouter(swapTarget.address)
 
     const toAddress = typeof to === 'string' ? to : to.address
 
@@ -160,7 +155,6 @@ export function createPoolFunctions({
       }
     }
     await inputToken.approve(swapTarget.address, constants.MaxUint256)
-    await governance.setRouter(swapTarget.address)
 
     const toAddress = typeof to === 'string' ? to : to.address
 
@@ -192,7 +186,6 @@ export function createPoolFunctions({
   }
 
   const mint: MintFunction = async (recipient, tickLower, tickUpper, liquidity) => {
-    await pool.setPositionManager(swapTarget.address)
     await token0.approve(swapTarget.address, constants.MaxUint256)
     await token1.approve(swapTarget.address, constants.MaxUint256)
     return swapTarget.mint(pool.address, recipient, tickLower, tickUpper, liquidity)
@@ -239,18 +232,15 @@ export function createMultiPoolFunctions({
   swapTarget,
   poolInput,
   poolOutput,
-  governance,
 }: {
   inputToken: TestERC20
   swapTarget: TestKatanaV3Router
   poolInput: MockTimeKatanaV3Pool
   poolOutput: MockTimeKatanaV3Pool
-  governance: KatanaGovernanceMock
 }): MultiPoolFunctions {
   async function swapForExact0Multi(amountOut: BigNumberish, to: Wallet | string): Promise<ContractTransaction> {
     const method = swapTarget.swapForExact0Multi
     await inputToken.approve(swapTarget.address, constants.MaxUint256)
-    await governance.setRouter(swapTarget.address)
     const toAddress = typeof to === 'string' ? to : to.address
     return method(toAddress, poolInput.address, poolOutput.address, amountOut)
   }
@@ -258,7 +248,6 @@ export function createMultiPoolFunctions({
   async function swapForExact1Multi(amountOut: BigNumberish, to: Wallet | string): Promise<ContractTransaction> {
     const method = swapTarget.swapForExact1Multi
     await inputToken.approve(swapTarget.address, constants.MaxUint256)
-    await governance.setRouter(swapTarget.address)
     const toAddress = typeof to === 'string' ? to : to.address
     return method(toAddress, poolInput.address, poolOutput.address, amountOut)
   }

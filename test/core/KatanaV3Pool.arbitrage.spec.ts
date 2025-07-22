@@ -51,7 +51,6 @@ function applySqrtRatioBipsHundredthsDelta(sqrtRatio: BigNumber, bipsHundredths:
 
 describe('KatanaV3Pool arbitrage tests', () => {
   let wallet: Wallet, proxyAdmin: Wallet, treasury: Wallet, positionManager: Wallet, arbitrageur: Wallet
-  let governanceSigner: Wallet
 
   let loadFixture: ReturnType<typeof createFixtureLoader>
 
@@ -81,32 +80,16 @@ describe('KatanaV3Pool arbitrage tests', () => {
 
             const pool = await fix.createPool(feeAmount, tickSpacing)
 
-            await network.provider.request({
-              method: 'hardhat_impersonateAccount',
-              params: [fix.governance.address],
-            })
-            await network.provider.send("hardhat_setBalance", [
-              fix.governance.address,
-              "0xDE0B6B3A7640000", // 1 ETH
-            ]);
-            governanceSigner = await (ethers as any).getSigner(fix.governance.address)
-
             await fix.token0.transfer(arbitrageur.address, BigNumber.from(2).pow(254))
             await fix.token1.transfer(arbitrageur.address, BigNumber.from(2).pow(254))
 
-            const {
-              swapExact0For1,
-              swapToHigherPrice,
-              swapToLowerPrice,
-              swapExact1For0,
-              mint,
-            } = await createPoolFunctions({
-              swapTarget: fix.swapTargetCallee,
-              token0: fix.token0,
-              token1: fix.token1,
-              pool: pool,
-              governance: fix.governance,
-            })
+            const { swapExact0For1, swapToHigherPrice, swapToLowerPrice, swapExact1For0, mint } =
+              await createPoolFunctions({
+                swapTarget: fix.swapTargetCallee,
+                token0: fix.token0,
+                token1: fix.token1,
+                pool: pool,
+              })
 
             const testerFactory = await ethers.getContractFactory('KatanaV3PoolSwapTest')
             const tester = (await testerFactory.deploy()) as KatanaV3PoolSwapTest
@@ -118,13 +101,13 @@ describe('KatanaV3Pool arbitrage tests', () => {
             await fix.token1.approve(tester.address, MaxUint256)
 
             await pool.initialize(startingPrice)
-            await pool.connect(governanceSigner).setFeeProtocol(feeProtocol, 10)
+            await pool.setFeeProtocol(feeProtocol, 10)
             await mint(wallet.address, minTick, maxTick, passiveLiquidity)
 
             expect((await pool.slot0()).tick).to.eq(startingTick)
             expect((await pool.slot0()).sqrtPriceX96).to.eq(startingPrice)
 
-            return { pool, swapExact0For1, mint, swapToHigherPrice, swapToLowerPrice, swapExact1For0, tester, tickMath, governance: fix.governance }
+            return { pool, swapExact0For1, mint, swapToHigherPrice, swapToLowerPrice, swapExact1For0, tester, tickMath }
           }
 
           let swapExact0For1: SwapFunction
@@ -135,20 +118,10 @@ describe('KatanaV3Pool arbitrage tests', () => {
           let mint: MintFunction
           let tester: KatanaV3PoolSwapTest
           let tickMath: TickMathTest
-          let governance: KatanaGovernanceMock
 
           beforeEach('load the fixture', async () => {
-            ;({
-              swapExact0For1,
-              pool,
-              mint,
-              swapToHigherPrice,
-              swapToLowerPrice,
-              swapExact1For0,
-              tester,
-              tickMath,
-              governance,
-            } = await loadFixture(arbTestFixture))
+            ;({ swapExact0For1, pool, mint, swapToHigherPrice, swapToLowerPrice, swapExact1For0, tester, tickMath } =
+              await loadFixture(arbTestFixture))
           })
 
           async function simulateSwap(
@@ -161,7 +134,6 @@ describe('KatanaV3Pool arbitrage tests', () => {
             amount0Delta: BigNumber
             amount1Delta: BigNumber
           }> {
-            await governance.setRouter(tester.address)
             const { amount0Delta, amount1Delta, nextSqrtRatio } = await tester.callStatic.getSwapResult(
               pool.address,
               zeroForOne,
@@ -282,10 +254,8 @@ describe('KatanaV3Pool arbitrage tests', () => {
                 arbBalance1 = arbBalance1.add(amount1Burn)
 
                 // add the fees as well
-                const {
-                  amount0: amount0CollectAndBurn,
-                  amount1: amount1CollectAndBurn,
-                } = await pool.callStatic.collect(arbitrageur.address, tickLower, tickUpper, MaxUint128, MaxUint128)
+                const { amount0: amount0CollectAndBurn, amount1: amount1CollectAndBurn } =
+                  await pool.callStatic.collect(arbitrageur.address, tickLower, tickUpper, MaxUint128, MaxUint128)
                 const [amount0Collect, amount1Collect] = [
                   amount0CollectAndBurn.sub(amount0Burn),
                   amount1CollectAndBurn.sub(amount1Burn),

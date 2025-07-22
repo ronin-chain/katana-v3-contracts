@@ -63,7 +63,6 @@ describe('KatanaV3Pool gas tests', () => {
           token0: fix.token0,
           token1: fix.token1,
           pool: pool,
-          governance: fix.governance,
         })
 
         await pool.initialize(encodePriceSqrt(1, 1))
