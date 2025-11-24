@@ -9,6 +9,7 @@ import { KatanaV3Factory } from "src/core/KatanaV3Factory.sol";
 import { KatanaV3PoolBeacon } from "src/core/KatanaV3PoolBeacon.sol";
 import { NonfungiblePositionManager } from "src/periphery/NonfungiblePositionManager.sol";
 import { ProxyAdmin } from "@openzeppelin/contracts/proxy/ProxyAdmin.sol";
+import { V3Migrator } from "src/periphery/V3Migrator.sol";
 
 contract Migration__20250618_UpgradeKatanaV3Core is Script {
   address proxyAdmin = 0x505d91E8fd2091794b45b27f86C045529fa92CD7;
@@ -44,6 +45,9 @@ contract Migration__20250618_UpgradeKatanaV3Core is Script {
 
     // upgrade beacon
     KatanaV3PoolBeacon(beacon).upgradeTo(address(new KatanaV3Pool()));
+
+    // deploy v3 migrator
+    address v3migrator = address(new V3Migrator(factory, weth9, positionManager));
     vm.stopBroadcast();
   }
 }
