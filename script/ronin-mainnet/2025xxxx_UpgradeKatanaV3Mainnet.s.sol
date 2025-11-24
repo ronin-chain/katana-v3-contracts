@@ -92,22 +92,22 @@ contract Migration__2025xxxx_UpgradeKatanaV3Mainnet is Script {
     safeTransaction({ name: "PositionManager", from: masterOwner, to: proxyAdmin, data: positionManagerUpgradeCalldata });
 
     /// Post upgrade
-    checkState(
-      "[PositionManager] check implementation",
+    requireAndLog(
       ProxyAdmin(proxyAdmin).getProxyImplementation(TransparentUpgradeableProxy(payable(positionManager)))
-        == newPositionManagerLogic
+        == newPositionManagerLogic,
+      "[PositionManager] check implementation"
     );
-    checkState(
-      "[PositionManager] check name",
-      keccak256(abi.encodePacked(pmContract.name())) == keccak256(abi.encodePacked(pm_name))
+    requireAndLog(
+      keccak256(abi.encodePacked(pmContract.name())) == keccak256(abi.encodePacked(pm_name)),
+      "[PositionManager] check name"
     );
-    checkState(
-      "[PositionManager] check symbol",
-      keccak256(abi.encodePacked(pmContract.symbol())) == keccak256(abi.encodePacked(pm_symbol))
+    requireAndLog(
+      keccak256(abi.encodePacked(pmContract.symbol())) == keccak256(abi.encodePacked(pm_symbol)),
+      "[PositionManager] check symbol"
     );
-    checkState("[PositionManager] check total supply", pmContract.totalSupply() == pm_totalSupply);
-    checkState("[PositionManager] check DOMAIN_SEPARATOR", pmContract.DOMAIN_SEPARATOR() == pm_DOMAIN_SEPARATOR);
-    checkState("[PositionManager] check PERMIT_TYPEHASH", pmContract.PERMIT_TYPEHASH() == pm_PERMIT_TYPEHASH);
+    requireAndLog(pmContract.totalSupply() == pm_totalSupply, "[PositionManager] check total supply");
+    requireAndLog(pmContract.DOMAIN_SEPARATOR() == pm_DOMAIN_SEPARATOR, "[PositionManager] check DOMAIN_SEPARATOR");
+    requireAndLog(pmContract.PERMIT_TYPEHASH() == pm_PERMIT_TYPEHASH, "[PositionManager] check PERMIT_TYPEHASH");
     console.log("");
   }
 
@@ -125,15 +125,13 @@ contract Migration__2025xxxx_UpgradeKatanaV3Mainnet is Script {
     safeTransaction({ name: "Factory", from: masterOwner, to: proxyAdmin, data: factoryUpgradeCalldata });
 
     /// Post upgrade
-    checkState(
-      "[Factory] check implementation",
-      ProxyAdmin(proxyAdmin).getProxyImplementation(TransparentUpgradeableProxy(payable(factory))) == newFactoryLogic
+    requireAndLog(
+      ProxyAdmin(proxyAdmin).getProxyImplementation(TransparentUpgradeableProxy(payable(factory))) == newFactoryLogic,
+      "[Factory] check implementation"
     );
-    checkState("[Factory] check treasury", factoryContract.treasury() == f_treasury);
-    checkState("[Factory] check owner", factoryContract.owner() == f_owner);
-    checkState("[Factory] check flash loan enabled", factoryContract.flashLoanEnabled() == f_flashLoanEnabled);
-
-    console.log("");
+    requireAndLog(factoryContract.treasury() == f_treasury, "[Factory] check treasury");
+    requireAndLog(factoryContract.owner() == f_owner, "[Factory] check owner");
+    requireAndLog(factoryContract.flashLoanEnabled() == f_flashLoanEnabled, "[Factory] check flash loan enabled");
   }
 
   function upgradePool() internal {
@@ -150,17 +148,16 @@ contract Migration__2025xxxx_UpgradeKatanaV3Mainnet is Script {
     safeTransaction({ name: "Pool", from: masterOwner, to: poolBeacon, data: poolUpgradeCalldata });
 
     /// Post upgrade
-    checkState("[Pool] check implementation", poolBeaconContract.implementation() == newPoolLogic);
-    checkState(
-      "[Pool] check pool proxy init code",
-      keccak256(poolBeaconContract.POOL_PROXY_INIT_CODE()) == keccak256(pb_POOL_PROXY_INIT_CODE)
+    requireAndLog(poolBeaconContract.implementation() == newPoolLogic, "[Pool] check implementation");
+    requireAndLog(
+      keccak256(poolBeaconContract.POOL_PROXY_INIT_CODE()) == keccak256(pb_POOL_PROXY_INIT_CODE),
+      "[Pool] check pool proxy init code"
     );
-    checkState(
-      "[Pool] check pool proxy init code hash",
-      poolBeaconContract.POOL_PROXY_INIT_CODE_HASH() == pb_POOL_PROXY_INIT_CODE_HASH
+    requireAndLog(
+      poolBeaconContract.POOL_PROXY_INIT_CODE_HASH() == pb_POOL_PROXY_INIT_CODE_HASH,
+      "[Pool] check pool proxy init code hash"
     );
-    checkState("[Pool] check pool beacon owner", poolBeaconContract.owner() == pb_owner);
-    console.log("");
+    requireAndLog(poolBeaconContract.owner() == pb_owner, "[Pool] check pool beacon owner");
   }
 
   function safeTransaction(string memory name, address from, address to, bytes memory data) internal {
@@ -178,7 +175,7 @@ contract Migration__2025xxxx_UpgradeKatanaV3Mainnet is Script {
     console.log("  [%s] calldata: ", name, vm.toString(data));
   }
 
-  function checkState(string memory message, bool condition) internal pure {
+  function requireAndLog(bool condition, string memory message) internal pure {
     require(condition, message);
     console.log("  %s: \xE2\x9C\x85", message);
   }
