@@ -18,7 +18,7 @@ import "./interfaces/external/IWETH9.sol";
 import "./base/PoolInitializer.sol";
 
 /// @title Katana V3 Migrator
-contract V3Migrator is IV3Migrator, PeripheryImmutableState, Multicall, SelfPermit {
+contract V3Migrator is IV3Migrator, PeripheryImmutableState, PoolInitializer, Multicall, SelfPermit {
   using LowGasSafeMath for uint256;
 
   address public immutable nonfungiblePositionManager;
@@ -93,18 +93,5 @@ contract V3Migrator is IV3Migrator, PeripheryImmutableState, Multicall, SelfPerm
         TransferHelper.safeTransfer(params.token1, msg.sender, refund1);
       }
     }
-  }
-
-  /// @inheritdoc IPoolInitializer
-  function createAndInitializePoolIfNecessary(address token0, address token1, uint24 fee, uint160 sqrtPriceX96)
-    external
-    payable
-    override
-    returns (address pool)
-  {
-    AuthorizationLib.checkPair(governance, token0, token1);
-    return INonfungiblePositionManager(nonfungiblePositionManager).createAndInitializePoolIfNecessary(
-      token0, token1, fee, sqrtPriceX96
-    );
   }
 }

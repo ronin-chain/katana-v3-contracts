@@ -460,23 +460,31 @@ describe('KatanaV3Pool swap tests', () => {
   for (const poolCase of TEST_POOLS) {
     describe(poolCase.description, () => {
       const poolCaseFixture = async () => {
-        const { createPool, token0, token1, swapTargetCallee: swapTarget, governance } = await poolFixture(
-          [wallet, proxyAdmin, treasury, positionManager, other],
-          waffle.provider
-        )
+        const {
+          createPool,
+          token0,
+          token1,
+          swapTargetCallee: swapTarget,
+          governance,
+        } = await poolFixture([wallet, proxyAdmin, treasury, positionManager, other], waffle.provider)
 
         await network.provider.request({
           method: 'hardhat_impersonateAccount',
           params: [governance.address],
         })
-        await network.provider.send("hardhat_setBalance", [
+        await network.provider.send('hardhat_setBalance', [
           governance.address,
-          "0xDE0B6B3A7640000", // 1 ETH
-        ]);
+          '0xDE0B6B3A7640000', // 1 ETH
+        ])
         const governanceSigner = await (ethers as any).getSigner(governance.address)
 
         const pool = await createPool(poolCase.feeAmount, poolCase.tickSpacing)
-        const poolFunctions = createPoolFunctions({ swapTarget, token0, token1, pool, governance })
+        const poolFunctions = createPoolFunctions({
+          swapTarget,
+          token0,
+          token1,
+          pool,
+        })
         await pool.initialize(poolCase.startingPrice)
         await pool.connect(governanceSigner).setFeeProtocol(0, 1)
         // mint all positions

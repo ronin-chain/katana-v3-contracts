@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`KatanaV3Factory #createPool gas 1`] = `558999`;
+exports[`KatanaV3Factory #createPool gas 1`] = `558040`;
 
 exports[`KatanaV3Factory factory bytecode size 1`] = `2091`;
 

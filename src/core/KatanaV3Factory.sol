@@ -75,8 +75,6 @@ contract KatanaV3Factory is IKatanaV3Factory, KatanaV3PoolDeployer {
 
   /// @inheritdoc IKatanaV3Factory
   function createPool(address tokenA, address tokenB, uint24 fee) external override returns (address pool) {
-    require(msg.sender == IKatanaGovernance(owner).getPositionManager(), "KatanaV3Factory: INVALID_POSITION_MANAGER");
-
     require(tokenA != tokenB);
     (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
     require(token0 != address(0));
