@@ -11,10 +11,10 @@ import { NonfungiblePositionManager } from "src/periphery/NonfungiblePositionMan
 import { ProxyAdmin } from "@openzeppelin/contracts/proxy/ProxyAdmin.sol";
 import { V3Migrator } from "src/periphery/V3Migrator.sol";
 
-contract Migration__20250618_UpgradeKatanaV3Core is Script {
-  address proxyAdmin = 0x505d91E8fd2091794b45b27f86C045529fa92CD7;
-  address positionManager = 0x7C2716803c09cd5eeD78Ba40117084af3c803565;
-  address positionDescriptor = 0x913B5559097F6587fD69F40d81bB67E7ea6c3a91;
+contract Migration__2025xxxx_UpgradeKatanaV3Mainnet is Script {
+  address proxyAdmin = 0x9D05D1F5b0424F8fDE534BC196FFB6Dd211D902a;
+  address positionManager = 0x7cF0fb64d72b733695d77d197c664e90D07cF45A;
+  address positionDescriptor = 0x8766648aA6586cC7Cd2cDb2Bd911eec78Cab89Ea;
 
   address owner;
   address factory;
@@ -31,7 +31,7 @@ contract Migration__20250618_UpgradeKatanaV3Core is Script {
   }
 
   function run() public {
-    vm.rememberKey(vm.envUint("TESTNET_PK"));
+    vm.rememberKey(vm.envUint("MAINNET_PK"));
 
     vm.startBroadcast(owner);
     address newPositionManagerLogic = address(new NonfungiblePositionManager(factory, weth9, positionDescriptor));
