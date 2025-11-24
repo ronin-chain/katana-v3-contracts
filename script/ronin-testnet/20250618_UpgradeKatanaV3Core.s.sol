@@ -48,6 +48,7 @@ contract Migration__20250618_UpgradeKatanaV3Core is Script {
 
     // deploy v3 migrator
     address v3migrator = address(new V3Migrator(factory, weth9, positionManager));
+    console.log("V3Migrator deployed:", v3migrator);
     vm.stopBroadcast();
   }
 }
